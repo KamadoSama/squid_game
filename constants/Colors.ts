@@ -1,26 +1,44 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+const primary= "#E84381"
 
-export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-  },
+const white = "#FFFFFF";
+const black = "#000000";
+const dark = "#626262";
+const gray = "#8B8BA1";
+const lightGray = "#D9D9E8";
+
+const primaryText = "#12151C"
+const secondaryText = "#5A5C60";
+
+const borderColor = "#D9D9D9";
+const inactive = "#EFEFEF";
+
+const success = "#02CA79";
+const successLight = "#20B06D";
+const error = "#e65454";
+const warring = "#C96F46";
+
+const backgroundPrimary = "#F6F6F6";
+
+
+export default {
+  primary,
+  blackText: black,
+  darkText: dark,
+  white: white,
+  lightGray: lightGray,
+  gray: gray,
+
+  border : borderColor,
+  inactive: inactive,
+
+  success: success,
+  error: error,
+  warring: warring,
+  valid : successLight,
+
+  primaryText: primaryText,
+  secondaryText: secondaryText,
+
+  backgroundPrimary: backgroundPrimary
 };

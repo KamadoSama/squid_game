@@ -1,64 +1,94 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Typo } from '@/assets/styles/TypographyStyle';
+import CardShop from '@/components/cardShop';
+import Colors from '@/constants/Colors';
+import image from '@/constants/image';
+import Spacing from '@/constants/Spacing';
+import { CardShopProps } from '@/service/model/model';
+import { Image } from 'expo-image';
+import { StyleSheet, Platform, SafeAreaView, View, TextInput, TouchableOpacity, Text, ScrollView } from 'react-native';
+import { Iconify } from 'react-native-iconify';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const data: CardShopProps[] = [
+  {
+    image: image.Staff_toy,
+    title: 'Supervisor toy',
+    star: true,
+    favorite: true
+  },
+
+  {
+    image: image.Black_master,
+    title: 'Front man toy',
+    star: false,
+    favorite: true
+  },
+
+]
+
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+
+        <View style={styles.header}>
+          <Image source={image.Logo_dark} style={{ height: 31, width: 84 }} />
+
+          <View style={styles.search}>
+            <TextInput
+              style={styles.input}
+              placeholder='Seach'
+              cursorColor={Colors.blackText}
+            />
+            <Iconify icon='fluent:search-24-filled' size={24} color={Colors.gray} />
+          </View>
+
+          <TouchableOpacity>
+            <Iconify icon='material-symbols:menu-rounded' size={34} color={Colors.gray} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.sessionTitle}>
+          <Text style={Typo.sessionTitle}>Recommended for you</Text>
+        </View>
+
+        <View style={styles.scrollContainer}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+            {
+              data.map((item, index) => (
+                <CardShop key={index} image={item.image} title={item.title} star={item.star} favorite={item.favorite} />
+              ))
+            }
+          </ScrollView>
+        </View>
+
+      </View>
+
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: Spacing.padding,
+    width: '100%',
+  },
+  scrollContainer: {
+    marginBottom: Spacing.spacingMedium,
+},
+  sessionTitle: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: Spacing.spacingMedium,
+  },
+
+  container: {
+    flex: 1,
+    paddingHorizontal: Spacing.padding,
   },
   stepContainer: {
     gap: 8,
@@ -70,5 +100,23 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  search: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.lightGray,
+    height: 50,
+    padding: Spacing.padding,
+    borderRadius: 50,
+    width: '60%',
+  },
+  input: {
+    backgroundColor: Colors.lightGray,
+    color: Colors.blackText,
+    fontSize: 16,
+    zIndex: 4,
+    fontWeight: 'bold',
+    width: '85%',
+    marginLeft: Spacing.spacing,
   },
 });
