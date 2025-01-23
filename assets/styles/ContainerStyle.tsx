@@ -1,6 +1,6 @@
 
 import FontSize from '@/constants/FontSize';
-import Layout from '@/constants/Layout';
+
 import Spacing from '@/constants/Spacing';
 import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -11,12 +11,7 @@ const containerStyles = StyleSheet.create( {
         flex: 1,
         padding: Spacing.spacingXlarge,
     },
-    main: {
-        flex: 1,
-        backgroundColor: Colors.light,
-        height: Layout.height,
-        width: Layout.width,
-    },
+
     ProgressBar: {
         marginVertical: Spacing.xPadding,
         justifyContent: 'center',

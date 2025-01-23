@@ -6,4 +6,6 @@ export default {
     "Logo_dark": require("@/assets/images/Logo_dark.png"),
     "Black_master": require("@/assets/images/Black_master.png"),
     "Staff_toy": require("@/assets/images/Staff_toy.png"),
+    "Staff": require("@/assets/images/Staff.png"),
+    "doll": require("@/assets/images/doll.png"),
 }

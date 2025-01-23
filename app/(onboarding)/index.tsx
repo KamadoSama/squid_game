@@ -28,6 +28,9 @@ const index = () => {
                     style={{
                         width: 118,
                         height: 21,
+                        position: "absolute",
+                        top: 23,
+                        left: 58,
                     }}
                 />
                 <Image source={image.squid_game_text}

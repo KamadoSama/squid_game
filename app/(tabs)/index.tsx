@@ -1,73 +1,193 @@
+import containerStyles from '@/assets/styles/ContainerStyle';
 import { Typo } from '@/assets/styles/TypographyStyle';
+import CardRecentOrder from '@/components/cardRecentOrder';
 import CardShop from '@/components/cardShop';
 import Colors from '@/constants/Colors';
 import image from '@/constants/image';
 import Spacing from '@/constants/Spacing';
-import { CardShopProps } from '@/service/model/model';
+import { CardShopProps, RecentOderProps } from '@/service/model/model';
 import { Image } from 'expo-image';
-import { StyleSheet, Platform, SafeAreaView, View, TextInput, TouchableOpacity, Text, ScrollView } from 'react-native';
+import { router } from 'expo-router';
+import React, { useRef, useEffect } from 'react';
+import {
+  StyleSheet,
+  Animated,
+  SafeAreaView,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  Easing,
+} from 'react-native';
 import { Iconify } from 'react-native-iconify';
 
+const DELAY = 200;
+
+/** Données à titre d’exemple */
 const data: CardShopProps[] = [
   {
     image: image.Staff_toy,
     title: 'Supervisor toy',
     star: true,
-    favorite: true
+    favorite: true,
+    price: 100,
   },
-
   {
     image: image.Black_master,
     title: 'Front man toy',
     star: false,
-    favorite: true
+    favorite: true,
+    price: 200,
   },
+];
 
-]
+const recentdOrder: RecentOderProps[] = [
+  {
+    image: image.Staff,
+    title: 'Collector outfit',
+    number: 3,
+  },
+  {
+    image: image.doll,
+    title: 'Doll',
+    number: 1,
+  },
+];
 
+type AnimatedCardShopProps = {
+ children?: React.ReactNode;
+  index: number; 
+  onPress?: () => void;
+};
 
+const AnimatedCardShop: React.FC<AnimatedCardShopProps> = ({
+  children,
+  index,
+  onPress,
+}) => {
+  // Position horizontale initiale de la carte (on part de la gauche, -200)
+  const translateX = useRef(new Animated.Value(-500)).current;
+
+  useEffect(() => {
+    // Animation d’entrée
+    Animated.timing(translateX, {
+      toValue: 0,
+      duration: 500,
+      delay: index * DELAY, 
+      easing: Easing.out(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+  }, [index, translateX]);
+
+  return (
+    <Animated.View
+      style={{
+        transform: [{ translateX }],
+        // Pour donner un peu de marge à la carte
+        marginRight: 15,
+      }}
+    >
+      {children}
+    </Animated.View>
+  );
+};
+
+// ----------
+// Écran principal
+// ----------
 export default function HomeScreen() {
+  const handleDetails = (item: CardShopProps) => {
+    router.navigate({
+      pathname: '/(screen)',
+      params: { details: JSON.stringify(item) },
+    });
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
+      <ScrollView style={containerStyles.scrollViewContent}>
+        <View style={styles.container}>
+          {/* --------- HEADER --------- */}
+          <View style={styles.header}>
+            <Image source={image.Logo_dark} style={{ height: 31, width: 84 }} />
 
-        <View style={styles.header}>
-          <Image source={image.Logo_dark} style={{ height: 31, width: 84 }} />
+            <View style={styles.search}>
+              <TextInput
+                style={styles.input}
+                placeholder="Seach"
+                cursorColor={Colors.blackText}
+              />
+              <Iconify
+                icon="fluent:search-24-filled"
+                size={24}
+                color={Colors.gray}
+              />
+            </View>
 
-          <View style={styles.search}>
-            <TextInput
-              style={styles.input}
-              placeholder='Seach'
-              cursorColor={Colors.blackText}
-            />
-            <Iconify icon='fluent:search-24-filled' size={24} color={Colors.gray} />
+            <TouchableOpacity onPress={() => router.navigate("/(onboarding)")}>
+              <Iconify
+                icon="material-symbols:menu-rounded"
+                size={34}
+                color={Colors.gray}
+              />
+            </TouchableOpacity>
           </View>
 
-          <TouchableOpacity>
-            <Iconify icon='material-symbols:menu-rounded' size={34} color={Colors.gray} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.sessionTitle}>
-          <Text style={Typo.sessionTitle}>Recommended for you</Text>
-        </View>
+          {/* --------- RECOMMENDED --------- */}
+          <View style={styles.sessionTitle}>
+            <Text style={Typo.sessionTitle}>Recommended for you</Text>
+          </View>
 
-        <View style={styles.scrollContainer}>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-            {
-              data.map((item, index) => (
-                <CardShop key={index} image={item.image} title={item.title} star={item.star} favorite={item.favorite} />
-              ))
-            }
-          </ScrollView>
+          <View style={styles.scrollContainer}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: Spacing.padding / 2 }}
+            >
+              {data.map((item, index) => (
+                <AnimatedCardShop
+                  key={index}
+                  index={index}
+                  onPress={() => handleDetails(item)}
+                >
+                  <CardShop {...item} onPress={() => handleDetails(item)} />
+                </AnimatedCardShop>
+              ))}
+            </ScrollView>
+          </View>
+
+          {/* --------- RECENT ORDERS --------- */}
+          <View style={styles.sessionTitle}>
+            <Text style={Typo.sessionTitle}>Recent orders</Text>
+          </View>
+
+          <View style={styles.scrollContainer}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {recentdOrder.map((item, index) => (
+               <AnimatedCardShop
+                  key={index}
+                  index={index}
+                >
+                   <CardRecentOrder key={index} {...item} />
+                </AnimatedCardShop>
+              ))}
+            </ScrollView>
+          </View>
         </View>
-
-      </View>
-
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
+// ----------
+// Styles
+// ----------
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: Spacing.padding,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -77,29 +197,13 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     marginBottom: Spacing.spacingMedium,
-},
+  },
   sessionTitle: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: Spacing.spacingMedium,
-  },
-
-  container: {
-    flex: 1,
-    paddingHorizontal: Spacing.padding,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
   },
   search: {
     flexDirection: 'row',
@@ -114,7 +218,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
     color: Colors.blackText,
     fontSize: 16,
-    zIndex: 4,
     fontWeight: 'bold',
     width: '85%',
     marginLeft: Spacing.spacing,

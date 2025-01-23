@@ -1,11 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, TouchableOpacityProps } from 'react-native'
 import React from 'react'
 import { CardShopProps } from '@/service/model/model'
 import { Image } from 'expo-image'
 import Colors from '@/constants/Colors'
 
 
-const CardShop: React.FC<CardShopProps> = ({ image, title, star, favorite }) => {
+const CardShop: React.FC<CardShopProps & TouchableOpacityProps> = ({ image, title, star, favorite, ...other }) => {
     return (
         <View style={styles.card}>
             <View style={styles.container}>
@@ -15,6 +15,7 @@ const CardShop: React.FC<CardShopProps> = ({ image, title, star, favorite }) => 
                     <Text style={styles.title}>{title}</Text>
 
                     <TouchableOpacity
+                        onPress={other.onPress}
                         style={
                             styles.button
                         }>
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
         marginTop: 16,
-        
+
     },
     buttonText: {
         color: "white",

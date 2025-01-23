@@ -1,5 +1,6 @@
 
 const primary= "#E84381"
+const pinkRgba ="#FFCEE0"
 
 const white = "#FFFFFF";
 const black = "#000000";
@@ -40,5 +41,6 @@ export default {
   primaryText: primaryText,
   secondaryText: secondaryText,
 
-  backgroundPrimary: backgroundPrimary
+  backgroundPrimary: backgroundPrimary,
+  pinkRgba
 };
