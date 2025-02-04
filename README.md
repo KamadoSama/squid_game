@@ -5,7 +5,7 @@
 <p align="center">
   <img src="./assets/images/demo.gif" alt="" width="300"/>
 </p> 
-> *Une démonstration en action !*  
+*Une démonstration en action !*  
 
 ---
 
@@ -14,7 +14,7 @@
 1. Clonez le dépôt :  
    ```bash
    git https://github.com/KamadoSama/squid_game.git
-   cd react-native-flight-tracker-3d
+   cd squid_game
    ```  
 
 2. Installez les dépendances :  
