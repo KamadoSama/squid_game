@@ -25,19 +25,10 @@ const index = () => {
             <BlurView intensity={100} style={styles.blurContainer}>
                 <Image
                     source={image.everything}
-                    style={{
-                        width: 118,
-                        height: 21,
-                        position: "absolute",
-                        top: 23,
-                        left: 58,
-                    }}
+                    style={styles.imageEverything}
                 />
                 <Image source={image.squid_game_text}
-                    style={{
-                        width: "100%",
-                        height: 154,
-                    }}
+                    style={{width: "100%",height: 154,}}
                 />
 
                 <Text style={styles.description}>
@@ -45,9 +36,7 @@ const index = () => {
                 </Text>
 
                 <TouchableOpacity
-                    style={
-                        styles.button
-                    }
+                    style={styles.button}
                     onPress={handlePress}
                 >
                     <Text style={styles.buttonText}>
@@ -99,5 +88,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16,
         textAlign: "center",
+    },
+    imageEverything: {
+        width: 118,
+        height: 21,
+        position: "absolute",
+        top: 23,
+        left: 58,
     }
 })

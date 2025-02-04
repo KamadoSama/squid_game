@@ -24,7 +24,6 @@ import { Iconify } from 'react-native-iconify';
 
 const DELAY = 200;
 
-/** Données à titre d’exemple */
 const data: CardShopProps[] = [
   {
     image: image.Staff_toy,
@@ -93,9 +92,6 @@ const AnimatedCardShop: React.FC<AnimatedCardShopProps> = ({
   );
 };
 
-// ----------
-// Écran principal
-// ----------
 export default function HomeScreen() {
   const handleDetails = (item: CardShopProps) => {
     router.navigate({
@@ -108,7 +104,7 @@ export default function HomeScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={containerStyles.scrollViewContent}>
         <View style={styles.container}>
-          {/* --------- HEADER --------- */}
+
           <View style={styles.header}>
             <Image source={image.Logo_dark} style={{ height: 31, width: 84 }} />
 
@@ -134,7 +130,6 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* --------- RECOMMENDED --------- */}
           <View style={styles.sessionTitle}>
             <Text style={Typo.sessionTitle}>Recommended for you</Text>
           </View>
@@ -157,7 +152,6 @@ export default function HomeScreen() {
             </ScrollView>
           </View>
 
-          {/* --------- RECENT ORDERS --------- */}
           <View style={styles.sessionTitle}>
             <Text style={Typo.sessionTitle}>Recent orders</Text>
           </View>
@@ -180,9 +174,6 @@ export default function HomeScreen() {
   );
 }
 
-// ----------
-// Styles
-// ----------
 const styles = StyleSheet.create({
   container: {
     flex: 1,
